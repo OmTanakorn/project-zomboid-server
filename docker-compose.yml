@@ -1,0 +1,23 @@
+services:
+  pz-server:
+    build: .
+    image: pz-server:b42
+    container_name: project-zomboid-server
+    environment:
+      - BETA_BRANCH=${BETA_BRANCH:-b42multiplayer}
+      - BETA_PASSWORD=${BETA_PASSWORD:-}
+      - SERVER_NAME=${SERVER_NAME:-servertest}
+      - SERVER_PASSWORD=${SERVER_PASSWORD:-}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
+      - MAX_PLAYERS=${MAX_PLAYERS:-16}
+      - MAX_RAM=${MAX_RAM:-4096m}
+    ports:
+      - "${SERVER_PORT:-16261}:16261/udp"
+      - "${SERVER_PORT_2:-16262}:16262/udp"
+    volumes:
+      - pz-data:/serverdata/serverfiles
+    restart: unless-stopped
+
+volumes:
+  pz-data:
+    driver: local
