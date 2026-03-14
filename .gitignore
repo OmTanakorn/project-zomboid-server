@@ -1,2 +1,6 @@
 # Local environment file — contains secrets, never commit
 .env
+
+# Project Zomboid server data and configuration
+pz-data/
+pz-config/
