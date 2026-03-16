@@ -372,7 +372,7 @@ SandboxVars = {
     -- 6 = Very Often
     AnnotatedMapChance = 4,
     -- Adds free points during character creation. Min: -100 Max: 100 Default: 0
-    CharacterFreePoints = 12,
+    CharacterFreePoints = 3,
     -- Gives player-built constructions extra hit points so they are  more resistant to zombie damage. Default = Normal
     -- 1 = Very Low
     -- 2 = Low
@@ -759,6 +759,8 @@ SandboxVars = {
     GeneratorTileRange = 20,
     -- How many levels both above and below a generator it can provide with electricity. Min: 1 Max: 15 Default: 3
     GeneratorVerticalPowerRange = 3,
+    -- Min: -1 Max: 100 Default: -1
+    BAM_Server_MinSuccessChance = -1,
     Basement = {
         -- How frequently basements spawn at random locations. Default = Sometimes
         -- 1 = Never
@@ -1013,5 +1015,83 @@ SandboxVars = {
         Butchering = 1.0,
         -- Rate at which Glassmaking skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
         Glassmaking = 1.0,
+    },
+    DAMN = {
+        AllowPro440Spawns = true,
+    },
+    ProjectSummerCar = {
+        TakeOverSpawning = false,
+        RemoveWreckedCars = true,
+        -- Min: 0.00 Max: 1.00 Default: 0.10
+        BurntCarChance = 0.1,
+        -- Min: 0.00 Max: 1.00 Default: 0.50
+        LowOrHigh = 0.5,
+        -- Min: 0.00 Max: 1.00 Default: 0.10
+        LowCondition = 0.1,
+        -- Min: 0.10 Max: 10.00 Default: 1.50
+        LowToMid = 1.5,
+        -- Min: 0.00 Max: 1.00 Default: 0.50
+        MidCondition = 0.5,
+        -- Min: 0.10 Max: 10.00 Default: 0.70
+        MidToHigh = 0.7,
+        -- Min: 0.00 Max: 1.00 Default: 0.90
+        HighCondition = 0.9,
+        -- Min: 0.00 Max: 1.00 Default: 0.40
+        PartChanceLowCond = 0.4,
+        -- Min: 0.00 Max: 1.00 Default: 1.00
+        PartChanceLowCondChance = 1.0,
+        -- Min: 0.00 Max: 1.00 Default: 1.00
+        PartChanceHighCond = 1.0,
+        -- Min: 0.00 Max: 1.00 Default: 1.00
+        PartChanceHighCondChance = 1.0,
+        -- Min: 0.00 Max: 1.00 Default: 1.00
+        PartChanceSurvivorMin = 1.0,
+        -- Min: 0.00 Max: 1.00 Default: 1.00
+        PartChanceSurvivorMax = 1.0,
+        -- Min: 0.00 Max: 1.00 Default: 0.20
+        PartChanceTrafficMin = 0.2,
+        -- Min: 0.00 Max: 1.00 Default: 0.90
+        PartChanceTrafficMax = 0.9,
+        -- Min: 0.00 Max: 1.00 Default: 0.00
+        RandomPartChance = 0.0,
+        -- Min: 0.00 Max: 2.00 Default: 0.30
+        ConditionRandom = 0.3,
+        RepairParts = true,
+        -- Min: 0.00 Max: 10.00 Default: 0.00
+        MinHP = 0.0,
+        -- Min: 0.00 Max: 1.00 Default: 0.00
+        MinHPCondition = 0.0,
+        -- Min: 0.00 Max: 10.00 Default: 1.00
+        MaxHP = 1.0,
+        -- Min: 0.00 Max: 1.00 Default: 1.00
+        MaxHPCondition = 1.0,
+        -- Min: 0.00 Max: 3.00 Default: 0.50
+        PerformancePartBoost = 0.5,
+        -- Min: 0.00 Max: 10.00 Default: 1.00
+        EngineImpactDamage = 1.0,
+        -- Min: 1 Max: 20 Default: 4
+        EngineImpactDamageCount = 4,
+        SmartOilIndicator = true,
+        -- Min: 0.00 Max: 100.00 Default: 1.00
+        OilLeakRate = 1.0,
+        -- Min: 0.00 Max: 100.00 Default: 1.00
+        OilDecayRate = 1.0,
+        -- Min: 0.00 Max: 100.00 Default: 1.00
+        OilFilterDecayRate = 1.0,
+        -- Min: 0.10 Max: 10.00 Default: 2.00
+        BatteryChargedBias = 2.0,
+        -- Min: 0.00 Max: 1.00 Default: 0.80
+        BatteryChargedChance = 0.8,
+        -- Min: 0.00 Max: 1.00 Default: 0.50
+        BatteryGoodChance = 0.5,
+        -- Min: 0.00 Max: 100.00 Default: 1.00
+        ChargeRate = 1.0,
+        -- Min: 0.00 Max: 100.00 Default: 1.00
+        BatteryCapacity = 1.0,
+        -- Min: 0.00 Max: 1.00 Default: 0.20
+        BatteryCapacityLowConditionMultiplier = 0.2,
+    },
+    ProximityInventory = {
+        ZombieOnly = false,
     },
 }
