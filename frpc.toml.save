@@ -1,0 +1,18 @@
+serverAddr = "43.210.67.158"
+serverPort = 7000
+auth.method = "token"
+auth.token = "PzB42Weekend"
+
+[[proxies]]
+name = "pz-udp-1"
+type = "udp"
+localIP = "127.0.0.1"
+localPort = 16261
+remotePort = 16261
+
+[[proxies]]
+name = "pz-udp-2"
+type = "udp"
+localIP = "127.0.0.1"
+localPort = 16262
+remotePort = 16262
