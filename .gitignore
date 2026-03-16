@@ -1,6 +1,15 @@
 # Local environment file — contains secrets, never commit
 .env
 
-# Project Zomboid server data and configuration
+# Project Zomboid server data (Game binaries & Assets - Very large)
 pz-data/
-pz-config/
+
+# Project Zomboid configuration and saves
+# Ignore everything in pz-config by default
+pz-config/*
+# But allow the Server configuration directory
+!pz-config/Server/
+
+# Ignore specific large files if they appear in the root
+*.log
+*.db
