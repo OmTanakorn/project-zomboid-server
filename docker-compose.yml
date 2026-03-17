@@ -15,4 +15,27 @@ services:
     deploy:
       resources:
         limits:
-          memory: 12G
+          memory: 14G
+
+  pz-web-backend:
+    build: ./pz-web/backend
+    container_name: pz-web-backend
+    ports:
+      - "8081:8000"
+    volumes:
+      - ./pz-config:/home/steam/Zomboid:ro
+      - ./pz-data:/home/steam/pzserver:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PZ_CONFIG_PATH=/home/steam/Zomboid
+      - SERVER_NAME=b42coop
+    restart: unless-stopped
+
+  pz-web-frontend:
+    build: ./pz-web/frontend
+    container_name: pz-web-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - pz-web-backend
+    restart: unless-stopped

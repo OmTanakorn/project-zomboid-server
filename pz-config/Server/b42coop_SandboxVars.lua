@@ -136,31 +136,31 @@ SandboxVars = {
     -- Any food that can rot or spoil. Min: 0.00 Max: 4.00 Default: 0.60
     FoodLootNew = 0.6,
     -- All other items that can be read, including books, fliers, and newspapers. Min: 0.00 Max: 4.00 Default: 0.60
-    LiteratureLootNew = 0.6,
+    LiteratureLootNew = 1.0,
     -- Books that provide skill XP multipliers. Min: 0.00 Max: 4.00 Default: 0.60
-    SkillBookLoot = 0.6,
+    SkillBookLoot = 0.8,
     -- Items that teach recipes. Min: 0.00 Max: 4.00 Default: 0.60
-    RecipeResourceLoot = 0.6,
+    RecipeResourceLoot = 0.8,
     -- Medicine, bandages and first aid tools. Min: 0.00 Max: 4.00 Default: 0.60
-    MedicalLootNew = 0.6,
+    MedicalLootNew = 0.8,
     -- Fishing Rods, Tents, camping gear etc. Min: 0.00 Max: 4.00 Default: 0.60
-    SurvivalGearsLootNew = 0.6,
+    SurvivalGearsLootNew = 0.8,
     -- Canned and dried food, beverages. Min: 0.00 Max: 4.00 Default: 0.60
-    CannedFoodLootNew = 0.6,
+    CannedFoodLootNew = 0.8,
     -- Weapons that are not tools in other categories. Min: 0.00 Max: 4.00 Default: 0.60
-    WeaponLootNew = 0.6,
+    WeaponLootNew = 0.8,
     -- Also includes weapon attachments. Min: 0.00 Max: 4.00 Default: 2.00
-    RangedWeaponLootNew = 2.0,
+    RangedWeaponLootNew = 1.0,
     -- Loose ammo, boxes and magazines. Min: 0.00 Max: 4.00 Default: 0.60
-    AmmoLootNew = 0.6,
+    AmmoLootNew = 0.8,
     -- Vehicle parts and the tools needed to install them. Min: 0.00 Max: 4.00 Default: 0.60
-    MechanicsLootNew = 0.6,
+    MechanicsLootNew = 0.8,
     -- Everything else. Also affects foraging for all items in Town/Road zones. Min: 0.00 Max: 4.00 Default: 0.60
-    OtherLootNew = 0.6,
+    OtherLootNew = 0.8,
     -- All wearable items that are not containers. Min: 0.00 Max: 4.00 Default: 0.60
-    ClothingLootNew = 0.6,
+    ClothingLootNew = 0.8,
     -- Backpacks and other wearable/equippable containers, eg. cases. Min: 0.00 Max: 4.00 Default: 0.60
-    ContainerLootNew = 0.6,
+    ContainerLootNew = 0.8,
     -- Keys for buildings/cars, key rings, and locks. Min: 0.00 Max: 4.00 Default: 0.40
     KeyLootNew = 0.4,
     -- VHS tapes and CDs. Min: 0.00 Max: 4.00 Default: 0.60
@@ -370,7 +370,7 @@ SandboxVars = {
     -- 4 = Sometimes
     -- 5 = Often
     -- 6 = Very Often
-    AnnotatedMapChance = 4,
+    AnnotatedMapChance = 5,
     -- Adds free points during character creation. Min: -100 Max: 100 Default: 0
     CharacterFreePoints = 3,
     -- Gives player-built constructions extra hit points so they are  more resistant to zombie damage. Default = Normal
@@ -401,7 +401,7 @@ SandboxVars = {
     -- 3 = High
     InjurySeverity = 2,
     -- How long, in hours, before dead zombie bodies disappear from the world.  If 0, maggots will not spawn on corpses. Min: -1.00 Max: 2147483647.00 Default: 216.00
-    HoursForCorpseRemoval = 216.0,
+    HoursForCorpseRemoval = 48.0,
     -- The impact that nearby decaying bodies has on the player's health and emotions. Default = Normal
     -- 1 = None
     -- 2 = Low
@@ -692,11 +692,11 @@ SandboxVars = {
     -- 5 = Very Abundant
     FishAbundance = 2,
     -- When a skill is at this level or above, television/VHS/other media  will not provide XP for it. Min: 0 Max: 10 Default: 3
-    LevelForMediaXPCutoff = 3,
+    LevelForMediaXPCutoff = 8,
     -- When a skill is at this level or above, scrapping furniture does not provide XP for the relevant skill. Does not apply to Electrical. Min: 0 Max: 10 Default: 0
     LevelForDismantleXPCutoff = 0,
     -- Number of days before old blood splats are removed. Removal happens when map chunks are loaded. 0 means they will never disappear. Min: 0 Max: 365 Default: 0
-    BloodSplatLifespanDays = 0,
+    BloodSplatLifespanDays = 14,
     -- Number of days before one can benefit from reading previously read literature items. Min: 1 Max: 365 Default: 45
     LiteratureCooldown = 45,
     -- If there are diminishing returns on bonus trait points provided from selecting multiple negative traits. Default = None
@@ -788,7 +788,7 @@ SandboxVars = {
         -- 2 = Fast Shamblers
         -- 3 = Shamblers
         -- 4 = Random
-        Speed = 4,
+        Speed = 2,
         -- If Random Speed is enabled, this controls what percentage of zombies are Sprinters. Check the "Advanced" box below to use a custom percentage. Min: 0 Max: 100 Default: 0
         SprinterPercentage = 0,
         -- The damage zombies inflict per attack. Default = Normal
@@ -796,7 +796,7 @@ SandboxVars = {
         -- 2 = Normal
         -- 3 = Weak
         -- 4 = Random
-        Strength = 2,
+        Strength = 4,
         -- The difficulty of killing a zombie. Default = Random
         -- 1 = Tough
         -- 2 = Normal
@@ -831,7 +831,7 @@ SandboxVars = {
         -- 2 = Navigate
         -- 3 = Basic Navigation
         -- 4 = Random
-        Cognition = 3,
+        Cognition = 2,
         -- Min: 0 Max: 100 Default: 33
         DoorOpeningPercentage = 33,
         -- How often zombies can crawl under parked vehicles. Default = Often
@@ -942,7 +942,7 @@ SandboxVars = {
     },
     MultiplierConfig = {
         -- The rate at which all skills level up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Global = 5.0,
+        Global = 4.0,
         -- When enabled, all skills will use the Global Multiplier.
         GlobalToggle = true,
         -- Rate at which Fitness skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00

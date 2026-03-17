@@ -16,3 +16,10 @@ type = "udp"
 localIP = "127.0.0.1"
 localPort = 16262
 remotePort = 16262
+
+[[proxies]]
+name = "web"
+type = "tcp"
+localIP = "0.0.0.0"
+localPort = 80
+remotePort = 1234

@@ -11,7 +11,7 @@ This project provides a robust, Dockerized environment for running a **Project Z
 ### Architecture
 - **Networking**: `host` mode to minimize NAT overhead and improve multiplayer latency.
 - **Persistence**: Local directory mapping for game data (`pz-data/`) and server configuration (`pz-config/`).
-- **JVM Optimization**: Configured with 8GB heap size and Z Garbage Collector (ZGC) for consistent performance.
+- **JVM Optimization**: Configured with 12GB heap size and G1 Garbage Collector (G1GC) with tuned parameters for low-latency performance (`-Xms12g -Xmx12g -XX:+UseG1GC -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -XX:+ParallelRefProcEnabled -XX:ParallelGCThreads=8`).
 
 ---
 
@@ -39,7 +39,7 @@ This project provides a robust, Dockerized environment for running a **Project Z
 ## Key Files and Configuration
 
 - **`docker-compose.yml`**: Primary service definition. Uses `network_mode: host` and maps volumes to local directories.
-- **`pz-data/ProjectZomboid64.json`**: JVM configuration. Optimized with `-Xms8g -Xmx8g -XX:+UseZGC`.
+- **`pz-data/ProjectZomboid64.json`**: JVM configuration. Optimized with `-Xms12g -Xmx12g -XX:+UseG1GC -XX:MaxGCPauseMillis=50`.
 - **`pz-config/Server/b42coop.ini`**: Game-level settings (MaxPlayers, Mods, WorkshopItems, Maps).
 - **`.gitignore`**: Configured to exclude large game binaries and local server data from version control.
 
