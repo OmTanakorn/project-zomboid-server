@@ -42,7 +42,7 @@ A high-performance, Dockerized environment for running a **Project Zomboid Build
 
 ### 2. การตั้งค่าที่สำคัญ
 - **Network**: `host` mode (ใช้ Port พื้นฐานของเกม 16261, 16262 โดยตรง)
-- **JVM Optimization**: ตั้งค่า RAM 12GB พร้อมระบบ **ZGC** เพื่อลดอาการกระตุก
+- **JVM Optimization**: ตั้งค่า RAM 12GB (Reservations) และสูงสุด 16GB (Limits) พร้อมระบบ **G1GC** ที่ปรับแต่งเพื่อความลื่นไหลสูงสุดบน Build 42 (Low-latency Tuning)
 - **Backups**: ระบบสำรองข้อมูลอัตโนมัติทุกๆ **4 ชั่วโมง** เก็บไว้สูงสุด 5 ชุด
 
 ### 3. การจัดการเซิร์ฟเวอร์เชิงลึก

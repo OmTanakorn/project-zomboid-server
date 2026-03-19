@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import axios, { AxiosError } from 'axios';
-import { Users, Box, Terminal, Server, Power, RefreshCw, Trash2, PlusCircle } from 'lucide-react';
+import axios from 'axios';
+import { Users, Terminal, Server, Activity, Cpu, HardDrive } from 'lucide-react';
 import './App.css';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '/api';
@@ -12,27 +12,30 @@ interface ServerStatus {
   playerList: string[];
   status: string;
   version: string;
-  modsCount: number;
 }
 
-interface Mod {
-  id: string;
-  workshopId: string;
+interface MonitoringData {
+  cpu_percent: number;
+  memory_usage_mib: number;
+  memory_limit_mib: number;
+  memory_percent: number;
+  tps: number;
 }
 
 function App() {
   const [status, setStatus] = useState<ServerStatus | null>(null);
+  const [monitoring, setMonitoring] = useState<MonitoringData | null>(null);
   const [logs, setLogs] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState('logs');
-  const [mods, setMods] = useState<Mod[]>([]);
-  const [isActionLoading, setActionLoading] = useState(false);
-  const [newMod, setNewMod] = useState({ id: '', workshopId: '' });
   const logEndRef = useRef<HTMLDivElement>(null);
 
   const fetchData = async () => {
     try {
-      const statusRes = await axios.get(`${API_BASE}/status`);
+      const [statusRes, monitorRes] = await Promise.all([
+        axios.get(`${API_BASE}/status`),
+        axios.get(`${API_BASE}/monitoring`).catch(() => ({ data: null }))
+      ]);
       setStatus(statusRes.data);
+      if (monitorRes.data) setMonitoring(monitorRes.data);
     } catch (error) {
       console.error('Error fetching status:', error);
     }
@@ -47,82 +50,23 @@ function App() {
     }
   }
 
-  const fetchMods = async () => {
-    try {
-      const res = await axios.get<Mod[]>(`${API_BASE}/mods`);
-      setMods(res.data);
-    } catch (error) {
-      console.error('Error fetching mods:', error);
-    }
-  };
-
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 5000); // Poll status more frequently
+    const interval = setInterval(fetchData, 3000); 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (activeTab === 'logs') {
-      fetchLogs();
-      const interval = setInterval(fetchLogs, 7000);
-      return () => clearInterval(interval);
-    } else if (activeTab === 'mods') {
-      fetchMods();
-    }
-  }, [activeTab]);
+    fetchLogs();
+    const interval = setInterval(fetchLogs, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const handleServerAction = async (action: 'start' | 'stop' | 'restart') => {
-    if (isActionLoading) return;
-    setActionLoading(true);
-    try {
-      const res = await axios.post(`${API_BASE}/server/action/${action}`);
-      alert(res.data.message);
-      setTimeout(fetchData, 3000); // Refresh status after a delay
-    } catch (error) {
-      const err = error as AxiosError<{ detail: string }>;
-      alert(`Error: ${err.response?.data?.detail || 'An unknown error occurred.'}`);
-    } finally {
-      setActionLoading(false);
+  useEffect(() => {
+    if (logEndRef.current) {
+      logEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-  
-  const handleAddMod = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMod.id || !newMod.workshopId) {
-      alert('Both Mod ID and Workshop ID are required.');
-      return;
-    }
-    setActionLoading(true);
-    try {
-      const res = await axios.post(`${API_BASE}/mods`, newMod);
-      alert(res.data.message);
-      setNewMod({ id: '', workshopId: '' });
-      setTimeout(fetchMods, 5000); // Refresh mods after a delay
-      setTimeout(fetchData, 5000); // Also refresh server status
-    } catch (error) {
-      const err = error as AxiosError<{ detail: string }>;
-      alert(`Error: ${err.response?.data?.detail || 'An unknown error occurred.'}`);
-    } finally {
-      setActionLoading(false);
-    }
-  }
-  
-  const handleRemoveMod = async (modToRemove: Mod) => {
-    if (!confirm(`Are you sure you want to remove the mod "${modToRemove.id}"? The server will restart.`)) return;
-    setActionLoading(true);
-    try {
-      const res = await axios.delete(`${API_BASE}/mods`, { data: modToRemove });
-      alert(res.data.message);
-      setTimeout(fetchMods, 5000); // Refresh mods after a delay
-      setTimeout(fetchData, 5000); // Also refresh server status
-    } catch (error) {
-      const err = error as AxiosError<{ detail: string }>;
-      alert(`Error: ${err.response?.data?.detail || 'An unknown error occurred.'}`);
-    } finally {
-      setActionLoading(false);
-    }
-  }
+  }, [logs]);
 
   const getStatusClass = (s: string) => {
     if (s === 'running') return 'status-online';
@@ -133,100 +77,93 @@ function App() {
   return (
     <div className="dashboard">
       <header className="header">
-        <h1>{status?.serverName || 'Loading...'}</h1>
+        <div className="header-left">
+          <Server size={32} className="logo-icon" />
+          <div>
+            <h1>{status?.serverName || 'Project Zomboid Server'}</h1>
+            <p className="version-text">{status?.version || 'Build 42 Unstable'}</p>
+          </div>
+        </div>
         <div className="header-right">
           <div className={`status-badge ${getStatusClass(status?.status || '')}`}>
             <div className={`status-dot ${getStatusClass(status?.status || '')}`}></div>
-            {status?.status || 'OFFLINE'}
-          </div>
-          <div className="server-controls">
-            <button onClick={() => handleServerAction('start')} disabled={isActionLoading || status?.status === 'running'} title="Start Server">
-              <Power size={18} />
-              <span>Start</span>
-            </button>
-            <button onClick={() => handleServerAction('stop')} disabled={isActionLoading || status?.status !== 'running'} className="stop-btn" title="Stop Server">
-              <Power size={18} />
-              <span>Stop</span>
-            </button>
-            <button onClick={() => handleServerAction('restart')} disabled={isActionLoading || status?.status !== 'running'} className="restart-btn" title="Restart Server">
-              <RefreshCw size={18} />
-              <span>Restart</span>
-            </button>
+            {status?.status?.toUpperCase() || 'OFFLINE'}
           </div>
         </div>
       </header>
 
       <div className="stats-grid">
         <div className="card">
-          <div className="card-title"><Users size={16} /> Players</div>
-          <div className="card-value">{status?.onlinePlayers ?? '...'} / {status?.maxPlayers ?? '...'}</div>
-          <div className="player-list">
-            {status?.playerList && status.playerList.length > 0 ? status.playerList.join(', ') : 'No players online'}
+          <div className="card-header">
+            <Users size={18} /> <span>Players Online</span>
           </div>
-        </div>
-        <div className="card">
-          <div className="card-title"><Box size={16} /> Mods</div>
-          <div className="card-value">{status?.modsCount ?? '...'}</div>
-        </div>
-        <div className="card">
-          <div className="card-title"><Server size={16} /> Version</div>
-          <div className="card-value">{status?.version || '...'}</div>
-        </div>
-      </div>
-
-      <div className="tabs">
-        <div className={`tab ${activeTab === 'logs' ? 'active' : ''}`} onClick={() => setActiveTab('logs')}><Terminal size={18} /> Logs</div>
-        <div className={`tab ${activeTab === 'mods' ? 'active' : ''}`} onClick={() => setActiveTab('mods')}><Box size={18} /> Mod Management</div>
-      </div>
-
-      <div className="content">
-        {activeTab === 'logs' && (
-          <div className="log-container">
-            {logs.length > 0 ? logs.map((log, i) => <pre key={i}>{log}</pre>) : <p>Loading logs...</p>}
-            <div ref={logEndRef} />
-          </div>
-        )}
-
-        {activeTab === 'mods' && (
-          <>
-            <form className="add-mod-form" onSubmit={handleAddMod}>
-              <h3><PlusCircle size={20} /> Add New Mod</h3>
-              <div className="form-inputs">
-                <input 
-                  type="text" 
-                  placeholder="Mod ID (e.g., firearmmod)" 
-                  value={newMod.id}
-                  onChange={(e) => setNewMod({...newMod, id: e.target.value})}
-                  disabled={isActionLoading}
-                />
-                <input 
-                  type="text" 
-                  placeholder="Workshop ID (e.g., 2256623447)" 
-                  value={newMod.workshopId}
-                  onChange={(e) => setNewMod({...newMod, workshopId: e.target.value})}
-                  disabled={isActionLoading}
-                />
-              </div>
-              <button type="submit" disabled={isActionLoading}>
-                {isActionLoading ? 'Processing...' : 'Add Mod & Restart'}
-              </button>
-            </form>
-            <div className="mods-list">
-              <h3>Installed Mods</h3>
-              {mods.map((mod, i) => (
-                <div key={i} className="mod-item">
-                  <div className="mod-info">
-                    <span className="mod-id">{mod.id}</span>
-                    <span className="mod-ws-id">Workshop ID: {mod.workshopId}</span>
-                  </div>
-                  <button onClick={() => handleRemoveMod(mod)} disabled={isActionLoading} className="remove-btn" title={`Remove ${mod.id}`}>
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
+          <div className="card-content">
+            <div className="card-value">{status?.onlinePlayers ?? 0} / {status?.maxPlayers ?? 32}</div>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: `${(status?.onlinePlayers || 0) / parseInt(status?.maxPlayers || '32') * 100}%` }}></div>
             </div>
-          </>
-        )}
+            <div className="player-list-mini">
+              {status?.playerList && status.playerList.length > 0 ? status.playerList.join(', ') : 'No players'}
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="card-header">
+            <Cpu size={18} /> <span>CPU Usage</span>
+          </div>
+          <div className="card-content">
+            <div className="card-value">{monitoring?.cpu_percent ?? 0}%</div>
+            <div className="progress-bar">
+              <div className={`progress-fill ${monitoring?.cpu_percent && monitoring.cpu_percent > 80 ? 'warning' : ''}`} style={{ width: `${monitoring?.cpu_percent ?? 0}%` }}></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="card-header">
+            <HardDrive size={18} /> <span>RAM Usage</span>
+          </div>
+          <div className="card-content">
+            <div className="card-value">{monitoring?.memory_usage_mib ? (monitoring.memory_usage_mib / 1024).toFixed(1) : 0} / {(monitoring?.memory_limit_mib ? monitoring.memory_limit_mib / 1024 : 16).toFixed(0)} GB</div>
+            <div className="progress-bar">
+              <div className={`progress-fill ${monitoring?.memory_percent && monitoring.memory_percent > 80 ? 'warning' : ''}`} style={{ width: `${monitoring?.memory_percent ?? 0}%` }}></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="card-header">
+            <Activity size={18} /> <span>Performance</span>
+          </div>
+          <div className="card-content">
+            <div className="card-value">{monitoring?.tps ?? 20} TPS</div>
+            <div className="tps-status">
+              Target: 20.0 TPS (Stable)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="main-content">
+        <div className="tabs">
+          <div className="tab-btn active">
+            <Terminal size={18} /> Server Logs (Live)
+          </div>
+        </div>
+
+        <div className="tab-content">
+          <div className="log-viewer">
+            <div className="log-window">
+              {logs.length > 0 ? logs.map((log, i) => (
+                <div key={i} className="log-line">
+                  <span className="log-index">[{i}]</span> {log}
+                </div>
+              )) : <div className="loading-text">Fetching logs...</div>}
+              <div ref={logEndRef} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

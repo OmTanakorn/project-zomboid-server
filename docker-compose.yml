@@ -6,16 +6,17 @@ services:
     volumes:
       - ./pz-data:/home/steam/pzserver
       - ./pz-config:/home/steam/Zomboid
+      - ./custom-start.sh:/home/steam/custom-start.sh
     environment:
       - USER=steam
-    command: >
-      bash -c "/home/steam/steamcmd/steamcmd.sh +force_install_dir /home/steam/pzserver +login anonymous +app_update 380870 -beta unstable validate +quit &&
-      bash /home/steam/pzserver/start-server.sh -servername b42coop -adminpassword CHANGEME_PASSWORD"
+    entrypoint: ["/bin/bash", "/home/steam/custom-start.sh"]
     restart: unless-stopped
     deploy:
       resources:
         limits:
-          memory: 14G
+          memory: 16G
+        reservations:
+          memory: 12G
 
   pz-web-backend:
     build: ./pz-web/backend

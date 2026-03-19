@@ -1,9 +1,10 @@
 :root {
-  --bg-color: #0f172a;
-  --card-bg: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --accent: #3b82f6;
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
   --success: #22c55e;
   --warning: #f59e0b;
   --danger: #ef4444;
@@ -12,9 +13,9 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
 }
 
 .dashboard {
@@ -28,25 +29,48 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
   gap: 1rem;
+}
+
+.logo-icon {
+  color: var(--primary);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.version-text {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
 }
 
 .header-right {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
 }
 
 .status-badge {
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.875rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: var(--border);
 }
 
 .status-dot {
@@ -55,19 +79,22 @@ body {
   border-radius: 50%;
 }
 
-.status-online { background-color: rgba(34, 197, 94, 0.2); color: var(--success); }
-.status-online .status-dot { background-color: var(--success); }
-
-.status-offline { background-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
+.status-online { color: var(--success); }
+.status-online .status-dot { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
+.status-offline { color: var(--danger); }
 .status-offline .status-dot { background-color: var(--danger); }
+.status-starting { color: var(--warning); }
+.status-starting .status-dot { background-color: var(--warning); animation: pulse 1s infinite; }
 
-.status-starting { background-color: rgba(245, 158, 11, 0.2); color: var(--warning); }
-.status-starting .status-dot { background-color: var(--warning); }
-
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
 
 .server-controls {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .server-controls button {
@@ -75,232 +102,167 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  border: 1px solid var(--border);
-  background-color: var(--card-bg);
-  color: var(--text-secondary);
   border-radius: 0.5rem;
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
+  transition: background 0.2s;
 }
 
-.server-controls button:not(:disabled):hover {
-  background-color: #334155;
-  color: var(--text-primary);
-}
+.server-controls button:hover:not(:disabled) { background-color: var(--primary-hover); }
+.server-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+.server-controls .stop-btn { background-color: var(--bg-card); border: 1px solid var(--danger); color: var(--danger); }
+.server-controls .restart-btn { background-color: var(--bg-card); border: 1px solid var(--warning); color: var(--warning); }
 
-.server-controls button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.server-controls button.stop-btn:not(:disabled):hover { background-color: var(--danger); }
-.server-controls button.restart-btn:not(:disabled):hover { background-color: var(--accent); }
-
+/* Stats Grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .card {
-  background-color: var(--card-bg);
-  padding: 1.5rem;
+  background-color: var(--bg-card);
+  padding: 1.25rem;
   border-radius: 0.75rem;
   border: 1px solid var(--border);
 }
 
-.card-title {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-  margin-bottom: 0.5rem;
+.card-header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
 }
 
 .card-value {
   font-size: 1.5rem;
   font-weight: 700;
+  margin-bottom: 0.75rem;
 }
 
-.player-list {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  margin-top: 0.5rem;
-  word-break: break-all;
+.progress-bar {
+  height: 6px;
+  background-color: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary);
+  transition: width 0.5s ease;
+}
+
+.progress-fill.warning { background-color: var(--danger); }
+
+.tps-status {
+  font-size: 0.75rem;
+  color: var(--success);
+}
+
+/* Tabs and Content */
+.main-content {
+  background-color: var(--bg-card);
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  overflow: hidden;
 }
 
 .tabs {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
+  background-color: rgba(15, 23, 42, 0.5);
+  padding: 0.5rem;
+  gap: 0.5rem;
 }
 
-.tab {
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  color: var(--text-secondary);
+.tab-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.tab:hover {
-  color: var(--text-primary);
-}
-
-.tab.active {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
-.content {
-  background-color: var(--card-bg);
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
-}
-
-.log-container {
-  background-color: #020617;
-  color: #94a3b8;
-  font-family: 'Fira Code', monospace;
-  padding: 1rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 0.5rem;
-  height: 500px;
-  overflow-y: auto;
-  font-size: 0.875rem;
-  white-space: pre-wrap;
-  border: 1px solid var(--border);
-}
-
-pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-/* Mod Management Styles */
-.add-mod-form {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.add-mod-form h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0;
-}
-
-.form-inputs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.add-mod-form input[type="text"] {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: var(--bg-color);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  color: var(--text-primary);
-  font-size: 1rem;
-  box-sizing: border-box;
-}
-
-.add-mod-form input[type="text"]:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.add-mod-form button {
-  padding: 0.75rem 1.5rem;
-  background-color: var(--accent);
   border: none;
-  border-radius: 0.5rem;
-  color: var(--text-primary);
+  background: none;
+  color: var(--text-muted);
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
-.add-mod-form button:hover:not(:disabled) {
-  background-color: #2563eb;
+.tab-btn.active {
+  background-color: var(--bg-card);
+  color: var(--primary);
 }
 
-.add-mod-form button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.tab-content {
+  padding: 1.5rem;
 }
 
-
-.mods-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.mods-list h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.mod-item {
-  background-color: rgba(255, 255, 255, 0.05);
+/* Log Viewer */
+.log-window {
+  background-color: #000;
   padding: 1rem;
   border-radius: 0.5rem;
+  height: 400px;
+  overflow-y: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.log-line {
+  margin-bottom: 0.25rem;
+  color: #e2e8f0;
+}
+
+.log-index { color: #64748b; margin-right: 0.5rem; }
+
+/* Mod Manager */
+.mod-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.mod-input-group input {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--bg-dark);
+  color: white;
+}
+
+.mod-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid transparent;
-  transition: border-color 0.2s ease;
+  padding: 1rem;
+  background-color: var(--bg-dark);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.mod-item:hover {
-  border-color: var(--border);
-}
-
-.mod-info {
+.mod-details {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
 }
 
-.mod-id {
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.mod-ws-id {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-.remove-btn {
+.delete-btn {
   background: none;
   border: none;
-  color: var(--text-secondary);
-  padding: 0.5rem;
-  border-radius: 50%;
+  color: var(--danger);
   cursor: pointer;
-  transition: all 0.2s ease;
+  padding: 0.5rem;
 }
 
-.remove-btn:hover:not(:disabled) {
-  background-color: var(--danger);
-  color: var(--text-primary);
-}
-
-.remove-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.loading-text {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
 }

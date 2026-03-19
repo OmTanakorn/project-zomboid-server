@@ -38,8 +38,9 @@ This project provides a robust, Dockerized environment for running a **Project Z
 
 ## Key Files and Configuration
 
-- **`docker-compose.yml`**: Primary service definition. Uses `network_mode: host` and maps volumes to local directories.
-- **`pz-data/ProjectZomboid64.json`**: JVM configuration. Optimized with `-Xms12g -Xmx12g -XX:+UseG1GC -XX:MaxGCPauseMillis=50`.
+- **`docker-compose.yml`**: Primary service definition. Uses `network_mode: host` and maps volumes. Resources are tuned with 12GB memory reservation and 16GB limit.
+- **`custom-start.sh`**: Custom entrypoint script for automatic updates and optimized JVM (G1GC) startup parameters.
+- **`pz-data/ProjectZomboid64.json`**: Original JVM configuration (Note: Overridden by `custom-start.sh` arguments).
 - **`pz-config/Server/b42coop.ini`**: Game-level settings (MaxPlayers, Mods, WorkshopItems, Maps).
 - **`.gitignore`**: Configured to exclude large game binaries and local server data from version control.
 

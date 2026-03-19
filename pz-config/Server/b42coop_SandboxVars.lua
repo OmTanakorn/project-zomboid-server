@@ -796,13 +796,13 @@ SandboxVars = {
         -- 2 = Normal
         -- 3 = Weak
         -- 4 = Random
-        Strength = 4,
+        Strength = 3,
         -- The difficulty of killing a zombie. Default = Random
         -- 1 = Tough
         -- 2 = Normal
         -- 3 = Fragile
         -- 4 = Random
-        Toughness = 4,
+        Toughness = 3,
         -- How the Knox Virus spreads. Default = Blood and Saliva
         -- 1 = Blood and Saliva
         -- 2 = Saliva Only
@@ -831,7 +831,7 @@ SandboxVars = {
         -- 2 = Navigate
         -- 3 = Basic Navigation
         -- 4 = Random
-        Cognition = 2,
+        Cognition = 3,
         -- Min: 0 Max: 100 Default: 33
         DoorOpeningPercentage = 33,
         -- How often zombies can crawl under parked vehicles. Default = Often
@@ -857,7 +857,7 @@ SandboxVars = {
         -- 3 = Poor
         -- 4 = Random
         -- 5 = Random between Normal and Poor
-        Sight = 2,
+        Sight = 3,
         -- Zombie hearing radius. Default = Random between Normal and Poor
         -- 1 = Pinpoint
         -- 2 = Normal
@@ -942,79 +942,82 @@ SandboxVars = {
     },
     MultiplierConfig = {
         -- The rate at which all skills level up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Global = 4.0,
+        Global = 2.0,
         -- When enabled, all skills will use the Global Multiplier.
-        GlobalToggle = true,
+        GlobalToggle = false,
         -- Rate at which Fitness skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Fitness = 1.0,
+        Fitness = 3.0,
         -- Rate at which Strength skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Strength = 1.0,
+        Strength = 3.0,
         -- Rate at which Sprinting skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Sprinting = 1.0,
+        Sprinting = 2.0,
         -- Rate at which Lightfooted skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Lightfoot = 1.0,
+        Lightfoot = 2.0,
         -- Rate at which Nimble skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Nimble = 1.0,
+        Nimble = 2.0,
         -- Rate at which Sneaking skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Sneak = 1.0,
+        Sneak = 2.0,
         -- Rate at which Axe skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Axe = 1.0,
+        Axe = 2.0,
         -- Rate at which Long Blunt skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Blunt = 1.0,
+        Blunt = 2.0,
         -- Rate at which Short Blunt skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        SmallBlunt = 1.0,
+        SmallBlunt = 2.0,
         -- Rate at which Long Blade skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        LongBlade = 1.0,
+        LongBlade = 2.0,
         -- Rate at which Short Blade skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        SmallBlade = 1.0,
+        SmallBlade = 2.0,
         -- Rate at which Spear skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Spear = 1.0,
+        Spear = 2.0,
         -- Rate at which Maintenance skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Maintenance = 1.0,
+        Maintenance = 2.0,
         -- Rate at which Carpentry skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Woodwork = 1.0,
+        Woodwork = 2.0,
         -- Rate at which Cooking skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Cooking = 1.0,
+        Cooking = 2.0,
         -- Rate at which Agriculture skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Farming = 1.0,
+        Farming = 3.0,
         -- Rate at which First Aid skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Doctor = 1.0,
+        Doctor = 3.0,
         -- Rate at which Electrical skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Electricity = 1.0,
+        Electricity = 2.0,
         -- Rate at which Welding skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        MetalWelding = 1.0,
+        MetalWelding = 3.0,
         -- Rate at which Mechanics skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Mechanics = 1.0,
+        Mechanics = 3.0,
         -- Rate at which Tailoring skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Tailoring = 1.0,
+        Tailoring = 3.0,
         -- Rate at which Aiming skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Aiming = 1.0,
+        Aiming = 2.0,
         -- Rate at which Reloading skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Reloading = 1.0,
+        Reloading = 2.0,
         -- Rate at which Fishing skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Fishing = 1.0,
+        Fishing = 2.0,
         -- Rate at which Trapping skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Trapping = 1.0,
+        Trapping = 2.0,
         -- Rate at which Foraging skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        PlantScavenging = 1.0,
+        PlantScavenging = 3.0,
         -- Rate at which Knapping skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        FlintKnapping = 1.0,
+        FlintKnapping = 2.0,
         -- Rate at which Masonry skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Masonry = 1.0,
+        Masonry = 2.0,
         -- Rate at which Pottery skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Pottery = 1.0,
+        Pottery = 2.0,
         -- Rate at which Carving skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Carving = 1.0,
+        Carving = 2.0,
         -- Rate at which Animal Care skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Husbandry = 1.0,
+        Husbandry = 3.0,
         -- Rate at which Tracking skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Tracking = 1.0,
+        Tracking = 2.0,
         -- Rate at which Blacksmithing skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Blacksmith = 1.0,
+        Blacksmith = 3.0,
         -- Rate at which Butchering skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Butchering = 1.0,
+        Butchering = 2.0,
         -- Rate at which Glassmaking skill levels up. Min: 0.00 Max: 1000.00 Default: 1.00
-        Glassmaking = 1.0,
+        Glassmaking = 2.0,
+    },
+    ProximityInventory = {
+        ZombieOnly = false,
     },
     DAMN = {
         AllowPro440Spawns = true,
@@ -1090,8 +1093,5 @@ SandboxVars = {
         BatteryCapacity = 1.0,
         -- Min: 0.00 Max: 1.00 Default: 0.20
         BatteryCapacityLowConditionMultiplier = 0.2,
-    },
-    ProximityInventory = {
-        ZombieOnly = false,
     },
 }
